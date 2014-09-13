@@ -28,7 +28,6 @@ public class Board extends JPanel implements Commons {
     boolean ingame = true;
     int timerId;
 
-    //pp
     public Board() {
 
         addKeyListener(new TAdapter());
