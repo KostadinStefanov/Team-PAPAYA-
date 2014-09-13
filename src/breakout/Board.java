@@ -28,7 +28,6 @@ public class Board extends JPanel implements Commons {
     boolean ingame = true;
     int timerId;
 
-    //pp
     public Board() {
 
         addKeyListener(new TAdapter());
@@ -61,3 +60,68 @@ public class Board extends JPanel implements Commons {
     }
 
 }
+// K.S Added
+
+public void paint(Graphics g) {
+    super.paint(g);
+
+    if (ingame) {
+        g.drawImage(ball.getImage(), ball.getX(), ball.getY(),
+                    ball.getWidth(), ball.getHeight(), this);
+        g.drawImage(paddle.getImage(), paddle.getX(), paddle.getY(),
+                    paddle.getWidth(), paddle.getHeight(), this);
+
+        for (int i = 0; i < 30; i++) {
+            if (!bricks[i].isDestroyed())
+                g.drawImage(bricks[i].getImage(), bricks[i].getX(),
+                            bricks[i].getY(), bricks[i].getWidth(),
+                            bricks[i].getHeight(), this);
+        }
+    } else {
+
+        Font font = new Font("Verdana", Font.BOLD, 18);
+        FontMetrics metr = this.getFontMetrics(font);
+
+        g.setColor(Color.BLACK);
+        g.setFont(font);
+        g.drawString(message,
+                     (Commons.WIDTH - metr.stringWidth(message)) / 2,
+                     Commons.WIDTH / 2);
+    }
+
+
+    Toolkit.getDefaultToolkit().sync();
+    g.dispose();
+}
+
+private class TAdapter extends KeyAdapter {
+
+    public void keyReleased(KeyEvent e) {
+        paddle.keyReleased(e);
+    }
+
+    public void keyPressed(KeyEvent e) {
+        paddle.keyPressed(e);
+    }
+}
+
+
+class ScheduleTask extends TimerTask {
+
+    public void run() {
+
+        ball.move();
+        paddle.move();
+        checkCollision();
+        repaint();
+
+    }
+}
+
+public void stopGame() {
+    ingame = false;
+    timer.cancel();
+}
+
+// TODO : Check Collision
+
