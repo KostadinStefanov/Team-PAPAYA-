@@ -9,7 +9,6 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,23 +26,31 @@ public class Board extends JPanel implements Commons {
 
     boolean ingame = true;
     int timerId;
+    int brickRows;
+    int brickColumns;
+	int timeInterval;
+	private Levels currentLevel;
+    
+    public Board(Levels currentLevel, int timeInterval, int brickRows, int brickColumns) {
 
-
-    public Board() {
-
-        addKeyListener(new TAdapter());
+        this.brickRows = brickRows;
+        this.brickColumns = brickColumns;
+        this.timeInterval = timeInterval;
+        this.currentLevel = currentLevel;
+    	
+    	addKeyListener(new TAdapter());
         setFocusable(true);
 
-        bricks = new Brick[30];
+        bricks = new Brick[brickRows*brickColumns];
         setDoubleBuffered(true);
         timer = new Timer();
-        timer.scheduleAtFixedRate(new ScheduleTask(), 1000, 10);
+        timer.scheduleAtFixedRate(new ScheduleTask(), 1000, timeInterval);
     }
 
-        public void addNotify() {
-            super.addNotify();
-            gameInit();
-        }
+    public void addNotify() {
+        super.addNotify();
+        gameInit();
+    }
 
     public void gameInit() {
 
@@ -52,8 +59,8 @@ public class Board extends JPanel implements Commons {
 
 
         int k = 0;
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 6; j++) {
+        for (int i = 0; i < brickRows; i++) {
+            for (int j = 0; j < brickColumns; j++) {
                 bricks[k] = new Brick(j * 40 + 30, i * 10 + 50);
                 k++;
             }
@@ -70,7 +77,7 @@ public class Board extends JPanel implements Commons {
             g.drawImage(paddle.getImage(), paddle.getX(), paddle.getY(),
                         paddle.getWidth(), paddle.getHeight(), this);
 
-            for (int i = 0; i < 30; i++) {
+            for (int i = 0; i < brickColumns*brickRows; i++) {
                 if (!bricks[i].isDestroyed())
                     g.drawImage(bricks[i].getImage(), bricks[i].getX(),
                                 bricks[i].getY(), bricks[i].getWidth(),
@@ -106,14 +113,11 @@ public class Board extends JPanel implements Commons {
 
 
     class ScheduleTask extends TimerTask {
-
         public void run() {
-
             ball.move();
             paddle.move();
             checkCollision();
             repaint();
-
         }
     }
 
@@ -129,13 +133,23 @@ public class Board extends JPanel implements Commons {
             stopGame();
         }
 
-        for (int i = 0, j = 0; i < 30; i++) {
+        for (int i = 0, j = 0; i < brickColumns*brickRows; i++) {
             if (bricks[i].isDestroyed()) {
                 j++;
             }
-            if (j == 30) {
-                message = "Victory";
-                stopGame();
+            if (j == brickColumns*brickRows) {
+                message = "Next Level";
+                if (currentLevel.getLevel()<=2) {
+                	Levels newLevel =new Levels((int)(currentLevel.getLevel()+1),(int)(currentLevel.gettimeInterval()-2),(int)(currentLevel.getBrickRows()+1),currentLevel.getBrickColumns()); 
+                	currentLevel = newLevel;
+                	stopGame();
+                	currentLevel.startLevel();
+				} else {
+					message = "Victory";
+					stopGame();
+				}
+                
+                
             }
         }
 
@@ -178,7 +192,7 @@ public class Board extends JPanel implements Commons {
         }
 
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < brickColumns*brickRows; i++) {
             if ((ball.getRect()).intersects(bricks[i].getRect())) {
 
                 int ballLeft = (int)ball.getRect().getMinX();

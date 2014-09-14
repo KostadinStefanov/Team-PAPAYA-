@@ -3,10 +3,11 @@ package breakout;
 import javax.swing.JFrame;
 
 public class Breakout extends JFrame {
-
-    public Breakout()
+	
+	public Breakout(Levels currentLevel, int timeInterval, int brickRows, int brickColumns)
     {
-        add(new Board());
+        add(new Board(currentLevel,timeInterval,brickRows,brickColumns));
+        
         setTitle("Breakout");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(Commons.WIDTH, Commons.HEIGTH);
@@ -17,6 +18,7 @@ public class Breakout extends JFrame {
     }
 
     public static void main(String[] args) {
-        new Breakout();
+    	Levels firstLevel = new Levels(0,10,5,6);
+    	firstLevel.startLevel();
     }
 }
