@@ -1,9 +1,11 @@
 package breakout;
 
+import java.util.Date;
+
 import javax.swing.JFrame;
 
 public class Breakout extends JFrame {
-
+	
 	public Breakout(Levels currentLevel) {
 		add(new Board(currentLevel, currentLevel.gettimeInterval(),
 				currentLevel.getBrickRows(), currentLevel.getBrickColumns()));
@@ -18,7 +20,8 @@ public class Breakout extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		Levels firstLevel = new Levels(0, 9, 1, 6);
+		Date curTime = new Date();
+		Levels firstLevel = new Levels(0, 9, 1, 6, curTime);
 		firstLevel.startLevel();
 	}
 }
