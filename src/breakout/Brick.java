@@ -2,35 +2,34 @@ package breakout;
 
 import javax.swing.ImageIcon;
 
-
 public class Brick extends Sprite {
 
-    String brickie = "./images/brickie.png";
+	String brickie = "./images/brickie";
 
-    boolean destroyed;
+	boolean destroyed;
 
+	public Brick(int x, int y, int imageNumber) {
+		this.x = x;
+		this.y = y;
+		
+		String imageAddress = brickie + imageNumber + ".png";
+		System.out.println(imageAddress);
+		ImageIcon ii = new ImageIcon(this.getClass().getResource(imageAddress));
+		
+		image = ii.getImage();
 
-    public Brick(int x, int y) {
-      this.x = x;
-      this.y = y;
+		width = image.getWidth(null);
+		heigth = image.getHeight(null);
 
-      ImageIcon ii = new ImageIcon(this.getClass().getResource(brickie));
-      image = ii.getImage();
+		destroyed = false;
+	}
 
-      width = image.getWidth(null);
-      heigth = image.getHeight(null);
+	public boolean isDestroyed() {
+		return destroyed;
+	}
 
-      destroyed = false;
-    }
-
-    public boolean isDestroyed()
-    {
-      return destroyed;
-    }
-
-    public void setDestroyed(boolean destroyed)
-    {
-      this.destroyed = destroyed;
-    }
+	public void setDestroyed(boolean destroyed) {
+		this.destroyed = destroyed;
+	}
 
 }
