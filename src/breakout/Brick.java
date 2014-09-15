@@ -13,7 +13,6 @@ public class Brick extends Sprite {
 		this.y = y;
 		
 		String imageAddress = brickie + imageNumber + ".png";
-		System.out.println(imageAddress);
 		ImageIcon ii = new ImageIcon(this.getClass().getResource(imageAddress));
 		
 		image = ii.getImage();

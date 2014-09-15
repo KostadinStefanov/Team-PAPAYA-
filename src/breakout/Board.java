@@ -21,6 +21,8 @@ public class Board extends JPanel implements Commons {
 	String message = "Game Over";
 	Ball ball;
 	Paddle paddle;
+	Background backgroundFirstPart;
+	Background backgroundSecondPart;
 	Brick bricks[];
 
 	boolean ingame = true;
@@ -56,11 +58,12 @@ public class Board extends JPanel implements Commons {
 
 		ball = new Ball();
 		paddle = new Paddle();
-
+		backgroundFirstPart = new Background(currentLevel.getLevel());
+		
 		int k = 0;
 		for (int i = 0; i < brickRows; i++) {
 			for (int j = 0; j < brickColumns; j++) {
-				bricks[k] = new Brick(j * 40 + 30, i * 10 + 50,
+				bricks[k] = new Brick(j * 40 + 30, i * 10 + 100,
 						currentLevel.getLevel());
 				k++;
 			}
@@ -71,6 +74,12 @@ public class Board extends JPanel implements Commons {
 		super.paint(g);
 
 		if (ingame) {
+			g.drawImage(backgroundFirstPart.getImage(), backgroundFirstPart.getX(), backgroundFirstPart.getY(),
+					backgroundFirstPart.getWidth(), backgroundFirstPart.getHeight(), this);
+			
+			g.drawImage(ball.getImage(), ball.getX(), ball.getY(),
+					ball.getWidth(), ball.getHeight(), this);
+			
 			g.drawImage(ball.getImage(), ball.getX(), ball.getY(),
 					ball.getWidth(), ball.getHeight(), this);
 			g.drawImage(paddle.getImage(), paddle.getX(), paddle.getY(),
