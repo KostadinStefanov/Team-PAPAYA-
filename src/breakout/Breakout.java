@@ -18,7 +18,7 @@ public class Breakout extends JFrame {
     }
 
     public static void main(String[] args) {
-    	Levels firstLevel = new Levels(0,10,5,6);
+    	Levels firstLevel = new Levels(0,7,5,6);
     	firstLevel.startLevel();
     }
 }
