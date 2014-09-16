@@ -34,8 +34,8 @@ public class MusicPlayer {
       
     public static void main(String[] args) {  
           
-        //plays 07.mp3 file located at C drive  
-        MusicPlayer mp3 = new MusicPlayer("c:/Users/Fantomas/Desktop/PAPAYA SUOUND/Team-PAPAYA-/src/resources/Tribal Tech House Beats Demo.mp3");  
+       
+        MusicPlayer mp3 = new MusicPlayer("../resources/Tribal");  
         mp3.play();  
      
     }  
