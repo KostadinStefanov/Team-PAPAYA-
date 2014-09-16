@@ -7,3 +7,4 @@ public interface Commons {
 	public static final int PADDLE_RIGHT = 250;
 	public static final int BALL_RIGHT = 280;
 }
+

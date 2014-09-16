@@ -9,6 +9,8 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,10 +20,14 @@ public class Board extends JPanel implements Commons {
 
 	Image ii;
 	Timer timer;
+	Date startTime;
 	String message = "Game Over";
 	Ball ball;
 	Paddle paddle;
+	Background backgroundFirstPart;
+	Background backgroundSecondPart;
 	Brick bricks[];
+	TotalPoints totalPoints;
 
 	boolean ingame = true;
 	int timerId;
@@ -37,6 +43,7 @@ public class Board extends JPanel implements Commons {
 		this.brickColumns = brickColumns;
 		this.timeInterval = timeInterval;
 		this.currentLevel = currentLevel;
+		this.startTime = currentLevel.getStartTime();
 
 		addKeyListener(new TAdapter());
 		setFocusable(true);
@@ -56,11 +63,13 @@ public class Board extends JPanel implements Commons {
 
 		ball = new Ball();
 		paddle = new Paddle();
-
+		backgroundFirstPart = new Background(currentLevel.getLevel());
+		totalPoints = new TotalPoints(currentLevel);
+		
 		int k = 0;
 		for (int i = 0; i < brickRows; i++) {
 			for (int j = 0; j < brickColumns; j++) {
-				bricks[k] = new Brick(j * 40 + 30, i * 10 + 50,
+				bricks[k] = new Brick(j * 40 + 30, i * 10 + 100,
 						currentLevel.getLevel());
 				k++;
 			}
@@ -71,11 +80,28 @@ public class Board extends JPanel implements Commons {
 		super.paint(g);
 
 		if (ingame) {
+			g.drawImage(backgroundFirstPart.getImage(), backgroundFirstPart.getX(), backgroundFirstPart.getY(),
+					backgroundFirstPart.getWidth(), backgroundFirstPart.getHeight(), this);
+			
+			g.drawImage(ball.getImage(), ball.getX(), ball.getY(),
+					ball.getWidth(), ball.getHeight(), this);
+			
 			g.drawImage(ball.getImage(), ball.getX(), ball.getY(),
 					ball.getWidth(), ball.getHeight(), this);
 			g.drawImage(paddle.getImage(), paddle.getX(), paddle.getY(),
 					paddle.getWidth(), paddle.getHeight(), this);
 
+			Font font = new Font("Verdana", Font.BOLD, 13);
+			FontMetrics metr = this.getFontMetrics(font);
+			
+			g.setColor(Color.BLACK);
+			g.setFont(font);
+			g.drawString("Points:" + totalPoints.getPoints(), 0, 10);
+			
+
+		    g.drawString("Time:" + currentLevel.getCurrentTime() , 215, 10);
+			
+			
 			for (int i = 0; i < brickColumns * brickRows; i++) {
 				if (!bricks[i].isDestroyed())
 					g.drawImage(bricks[i].getImage(), bricks[i].getX(),
@@ -89,9 +115,18 @@ public class Board extends JPanel implements Commons {
 
 			g.setColor(Color.BLACK);
 			g.setFont(font);
+			
+			g.drawString("Points:" + totalPoints.getPoints(), 0, 30);
+			
+		    g.drawString("Time:" + currentLevel.getCurrentTime() , 180, 30);
+		    
 			g.drawString(message,
 					(Commons.WIDTH - metr.stringWidth(message)) / 2,
 					Commons.WIDTH / 2);
+			g.drawString(message,
+					(Commons.WIDTH - metr.stringWidth(message)) / 2,
+					Commons.WIDTH / 2);		
+			
 		}
 
 		Toolkit.getDefaultToolkit().sync();
@@ -139,7 +174,8 @@ public class Board extends JPanel implements Commons {
 					Levels newLevel = new Levels(currentLevel.getLevel() + 1,
 							currentLevel.gettimeInterval() - 2,
 							currentLevel.getBrickRows() + 1,
-							currentLevel.getBrickColumns());
+							currentLevel.getBrickColumns(),
+							currentLevel.getStartTime());
 					currentLevel = newLevel;
 					stopGame();
 					currentLevel.startLevel();
@@ -220,6 +256,7 @@ public class Board extends JPanel implements Commons {
 					}
 
 					bricks[i].setDestroyed(true);
+					totalPoints.addNewPoints(currentLevel.getLevel());
 				}
 			}
 		}
