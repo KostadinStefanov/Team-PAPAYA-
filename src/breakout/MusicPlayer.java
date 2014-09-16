@@ -28,16 +28,6 @@ public class MusicPlayer {
             System.out.println(e);  
         }  
   
-          
-    }  
-  
-      
-    public static void main(String[] args) {  
-          
-       
-        MusicPlayer mp3 = new MusicPlayer("../resources/Tribal");  
-        mp3.play();  
-     
     }  
   
 }  
