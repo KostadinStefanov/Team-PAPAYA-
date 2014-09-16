@@ -10,11 +10,16 @@ import javax.swing.JFrame;
 
 public class Breakout extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Breakout(Levels currentLevel) {
 		add(new Board(currentLevel, currentLevel.gettimeInterval(),
 				currentLevel.getBrickRows(), currentLevel.getBrickColumns()));
 
-		setTitle("Breakout");
+		setTitle("SoftuniBreaker Level " + (int)(currentLevel.getLevel() + 1));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(Commons.WIDTH, Commons.HEIGTH);
 		setLocationRelativeTo(null);
