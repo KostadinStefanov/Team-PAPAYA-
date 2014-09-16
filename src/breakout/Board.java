@@ -47,7 +47,7 @@ public class Board extends JPanel implements Commons {
 		this.timeInterval = timeInterval;
 		this.currentLevel = currentLevel;
 		this.startTime = currentLevel.getStartTime();
-
+		
 		addKeyListener(new TAdapter());
 		setFocusable(true);
 
@@ -112,7 +112,6 @@ public class Board extends JPanel implements Commons {
 							bricks[i].getHeight(), this);
 			}
 		} else {
-
 			Font font = new Font("Verdana", Font.BOLD, 18);
 			FontMetrics metr = this.getFontMetrics(font);
 
