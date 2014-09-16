@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 
 public class Background extends Sprite implements Commons {
 	
-	protected String background = "./images/background";
+	protected String background = "../resources/background";
 	
 	public Background(int imageNumber) {
 		
