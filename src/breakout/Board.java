@@ -122,7 +122,7 @@ public class Board extends JPanel implements Commons {
 			g.drawString("Points:" + totalPoints.getPoints(), 0, 30);
 			
 		    g.drawString("Time:" + currentLevel.getCurrentTime() , 180, 30);
-		    
+		    		    
 			g.drawString(message,
 					(Commons.WIDTH - metr.stringWidth(message)) / 2,
 					Commons.WIDTH / 2);
