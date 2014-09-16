@@ -12,6 +12,7 @@ import java.util.TreeMap;
 public class Ranking {
 	public int total;
 	public String time;
+	private static ArrayList<String> results;
 	
 	public Ranking(TotalPoints total, Levels time){
 		this.total = total.getPoints();
@@ -43,7 +44,7 @@ public class Ranking {
 				String valueDateString = putStrings[1];
 			    records.put(keyTotal, valueDateString);
 			}
-			ArrayList<String> results = null;
+			results = null;
 			//TODO get biggest results and print 3 biggest result
 			for (Integer key : records.keySet()) {
 				results.add(key + " " + results.get(key));
