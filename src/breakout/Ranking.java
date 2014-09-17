@@ -25,6 +25,7 @@ public class Ranking {
 	public void addPoint() {
 		// How can i call this method from Board.class?
 		List<RankingRows> records = new ArrayList<>();
+
 		BufferedReader in = null;
 		String filePath = workingDir + "/src/resources/ranking.txt";
 		
