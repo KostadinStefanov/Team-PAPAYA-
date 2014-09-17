@@ -20,7 +20,6 @@ public class Ranking {
 	}
 
 	static void addPoint(int total, String time) throws IOException{
-		//How can i call this method from Board.class?
 		 try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("../resources/ranking.txt", true)))) {
 			 	String print = total + " " + time;
 			    out.println(print);
