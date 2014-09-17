@@ -1,23 +1,34 @@
 package breakout;
 
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class Board extends JPanel implements Commons {
 
@@ -35,6 +46,7 @@ public class Board extends JPanel implements Commons {
 	Background backgroundSecondPart;
 	Brick bricks[];
 	TotalPoints totalPoints;
+	Ranking newRanking;
 
 	boolean ingame = true;
 	int timerId;
@@ -99,7 +111,6 @@ public class Board extends JPanel implements Commons {
 					paddle.getWidth(), paddle.getHeight(), this);
 
 			Font font = new Font("Verdana", Font.BOLD, 13);
-			//FontMetrics metr = this.getFontMetrics(font);
 			
 			g.setColor(Color.BLACK);
 			g.setFont(font);
@@ -116,24 +127,6 @@ public class Board extends JPanel implements Commons {
 							bricks[i].getHeight(), this);
 			}
 		} else {
-			Font font = new Font("Verdana", Font.BOLD, 18);
-			FontMetrics metr = this.getFontMetrics(font);
-
-			g.setColor(Color.BLACK);
-			g.setFont(font);
-			
-			g.drawString("Points:" + totalPoints.getPoints(), 0, 30);
-			
-		    //g.drawString("Time:" + currentLevel.getCurrentTime() , 180, 30);
-		    		    
-			g.drawString(message,
-					(Commons.WIDTH - metr.stringWidth(message)) / 2,
-					Commons.WIDTH / 2);
-			g.drawString(message,
-					(Commons.WIDTH - metr.stringWidth(message)) / 2,
-					Commons.WIDTH / 2);
-			
-		    //JFrame frame = new JFrame("InputDialog Example #1");
 		   
 		}
 
@@ -161,35 +154,91 @@ public class Board extends JPanel implements Commons {
 		}
 	}
 
-	public void stopGame() {
+	public void stopGame(Boolean end) {
 		ingame = false;
 
-		// prompt the user to enter their name
-		String[] options = {"OK"};
-		JPanel panel = new JPanel();
-		JLabel lbl = new JLabel("Enter Your name: ");
-		JTextField txt = new JTextField(10);
-		panel.add(lbl);
-		panel.add(txt);
-		int selectedOption = JOptionPane.showOptionDialog(null, panel, "The Title", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options , options[0]);
-
-		if(selectedOption == 0)
-		{
-			String name = txt.getText();
-			name = name.replace(" ", "");
-			Ranking newRanking = new Ranking(totalPoints, currentLevel, name);
-			newRanking.addPoint();
+		if (end) {
+			// prompt the user to enter their name
+			String[] options = {"OK"};
+			JPanel panel = new JPanel();
+			JLabel lbl = new JLabel("Enter Your name: ");
+			JTextField txt = new JTextField(15);
+			panel.add(lbl);
+			panel.add(txt);
+			int selectedOption = JOptionPane.showOptionDialog(null, panel, "The Title", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options , options[0]);
+	
+			if(selectedOption == 0)
+			{
+				String name = txt.getText();
+				name = name.replace(" ", "");
+				this.newRanking = new Ranking(totalPoints, currentLevel, name);
+				newRanking.addPoint();
+			}
+			currentLevel.closeBreakout();
+			JFrame finalResults = new JFrame("SoftuniBreaker Results");
+			
+			OpenResultsFile(finalResults);
 		}
 		
 		timer.cancel();
 
 
 	}
+	private void OpenResultsFile (JFrame frame) {
+		  String workingDir = System.getProperty("user.dir");  
+		  URI uri;
+			try {
+			    uri = new URI("file:///home/borislav/Dropbox/GitPapaya/Team-PAPAYA-/src/resources/ranking.txt");
+			    class OpenUrlAction implements ActionListener {
+			      @Override public void actionPerformed(ActionEvent e) {
+			        open(uri);
+			      }
+			    }
+				frame.setSize(Commons.WIDTH, Commons.HEIGTH);
+				frame.setLocationRelativeTo(null);
+				frame.setIgnoreRepaint(true);
+				frame.setResizable(false);
+				frame.setVisible(true);
+			    frame.setFocusable(true);
+			    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			    frame.setSize(300, 400);
+			    Container container = frame.getContentPane();
+			    container.setLayout(new GridBagLayout());
+			    JButton button = new JButton();
+			    button.setText("<HTML>"
+			    		+ "<div><p>Your Name:" + newRanking.getUserName() + "</p></div>"
+			    		+ "<div><p>Your Points:" + newRanking.getRankUserTotal() + "</p></div>"
+			    		+ "<div><p>Your Time:" + newRanking.getRankUserTime() + "</p></div>"
+			    		+ "<div><p>Your Position is:" + newRanking.getPosition() + "</p></div>"
+			    		+ "<div><p></div></p><div><p>Click the <FONT color=\"#000099\"><U>link</U></FONT>"
+			        + " to go open the whole ranking.</p></div></HTML>");
+			    button.setPreferredSize(new Dimension(250, 250));
+			    //button.setHorizontalAlignment(SwingConstants.LEFT);
+			    button.setBorderPainted(false);
+			    button.setOpaque(false);
+			    button.setBackground(Color.WHITE);
+			    button.setToolTipText(uri.toString());
+			    button.addActionListener(new OpenUrlAction());
+			    container.add(button);
+			    frame.setVisible(true);
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+				System.out.println("file not found");
+			}
+		  }
+
+	  private static void open(URI uri) {
+		  if (Desktop.isDesktopSupported()) {
+	      try {
+	        Desktop.getDesktop().browse(uri);
+	      } catch (IOException e) { System.out.println("Can't open the file"); }
+	      } 
+	  }
 
 	public void checkCollision() {
 
 		if (ball.getRect().getMaxY() > Commons.BOTTOM) {
-			stopGame();
+			stopGame(true);
 		}
 
 		for (int i = 0, j = 0; i < brickColumns * brickRows; i++) {
@@ -205,11 +254,9 @@ public class Board extends JPanel implements Commons {
 							currentLevel.getBrickColumns(),
 							currentLevel.getStartTime());
 					currentLevel = newLevel;
-					stopGame();
-					currentLevel.startLevel();
+					stopGame(false);
 				} else {
-					message = "Victory";
-					stopGame();
+					stopGame(true);
 				}
 
 			}

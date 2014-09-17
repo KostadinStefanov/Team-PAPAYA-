@@ -16,7 +16,7 @@ public class RankingRows implements Comparable<RankingRows> {
            return new Long (this.long2).compareTo(other.long2);
        }
 
-       return new Long(this.long1).compareTo(other.long1);
+       return new Long(other.long1).compareTo(this.long1);
    }
    public String getUserName() {
 	   return theString;

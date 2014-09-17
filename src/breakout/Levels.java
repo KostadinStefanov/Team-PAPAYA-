@@ -9,6 +9,7 @@ public class Levels {
 	int brickColumns;
 	int timeInterval;
 	Date startTime;
+	Breakout currentBreakout;
 
 	public Levels(int level, int timeInterval, int brickRows, int brickColumns, Date startTime) {
 		this.level = level;
@@ -16,6 +17,7 @@ public class Levels {
 		this.brickRows = brickRows;
 		this.timeInterval = timeInterval;
 		this.startTime = startTime;
+		this.currentBreakout = new Breakout(this);
 	}
 
 	public int getLevel() {
@@ -50,8 +52,8 @@ public class Levels {
 	    return dNow.getTime()-startTime.getTime();
 	}
 
-	public void startLevel() {
-		new Breakout(this);
+	public void closeBreakout() {
+		this.currentBreakout.setVisible(false);
 	}
 
 }

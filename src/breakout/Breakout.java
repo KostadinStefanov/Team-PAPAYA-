@@ -11,10 +11,13 @@ public class Breakout extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	private Board breakoutBoard;
+	
 	public Breakout(Levels currentLevel) {
-		add(new Board(currentLevel, currentLevel.gettimeInterval(),
-				currentLevel.getBrickRows(), currentLevel.getBrickColumns()));
+		this.breakoutBoard = new Board(currentLevel, currentLevel.gettimeInterval(),
+				currentLevel.getBrickRows(), currentLevel.getBrickColumns());
+		add(breakoutBoard);
 
 		setTitle("SoftuniBreaker Level " + (int)(currentLevel.getLevel() + 1));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -27,13 +30,14 @@ public class Breakout extends JFrame {
 			
 				
 	}
+//	public class closeFrame {
+//		this.close();
+//	}
 
 	public static void main(String[] args) throws JavaLayerException {
 		Date curTime = new Date();
-		Levels firstLevel = new Levels(0, 9, 1, 6, curTime);
-		firstLevel.startLevel();
-		
-       MusicPlayer mp3 = new MusicPlayer("src/resources/Tribal.mp3");  
+		Levels firstLevel = new Levels(0, 9, 1, 6, curTime);	
+        MusicPlayer mp3 = new MusicPlayer("src/resources/Tribal.mp3");  
         mp3.play();  
 	}
 }
