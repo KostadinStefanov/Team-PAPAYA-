@@ -12,6 +12,7 @@ import java.util.TreeMap;
 public class Ranking {
 	public int total;
 	public String time;
+	private static ArrayList<String> results;
 	
 	public Ranking(TotalPoints total, Levels time){
 		this.total = total.getPoints();
@@ -47,6 +48,7 @@ public class Ranking {
 			    records.put(keyTotal, valueDate);
 			}
 			ArrayList<String> results = null;
+			results = null;
 			for (Integer key : records.keySet()) {
 				results.add(key + " " + results.get(key));
 			}
