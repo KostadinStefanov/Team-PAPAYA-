@@ -3,7 +3,7 @@
 Теодор Пенев, Магдалена Петрова, Стоян Петров, Костадин Стефанов.
 
 
-"HardBreaker->SoftUni"
+"SoftUni-Breaker"
 ============
 
 Java Basics September 2014 TEAM "PAPAYA"
