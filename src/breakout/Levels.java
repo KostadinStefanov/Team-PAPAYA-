@@ -44,6 +44,11 @@ public class Levels {
 	    Date newTime = new Date(dNow.getTime()-startTime.getTime());
 	    return ft.format(newTime);
 	}
+	
+	public long getCurrentTimeLong() {
+	    Date dNow = new Date();
+	    return dNow.getTime()-startTime.getTime();
+	}
 
 	public void startLevel() {
 		new Breakout(this);

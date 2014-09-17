@@ -13,7 +13,11 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Board extends JPanel implements Commons {
 
@@ -120,15 +124,17 @@ public class Board extends JPanel implements Commons {
 			
 			g.drawString("Points:" + totalPoints.getPoints(), 0, 30);
 			
-		    g.drawString("Time:" + currentLevel.getCurrentTime() , 180, 30);
+		    //g.drawString("Time:" + currentLevel.getCurrentTime() , 180, 30);
 		    		    
 			g.drawString(message,
 					(Commons.WIDTH - metr.stringWidth(message)) / 2,
 					Commons.WIDTH / 2);
 			g.drawString(message,
 					(Commons.WIDTH - metr.stringWidth(message)) / 2,
-					Commons.WIDTH / 2);		
+					Commons.WIDTH / 2);
 			
+		    //JFrame frame = new JFrame("InputDialog Example #1");
+		   
 		}
 
 		Toolkit.getDefaultToolkit().sync();
@@ -157,7 +163,27 @@ public class Board extends JPanel implements Commons {
 
 	public void stopGame() {
 		ingame = false;
+
+		// prompt the user to enter their name
+		String[] options = {"OK"};
+		JPanel panel = new JPanel();
+		JLabel lbl = new JLabel("Enter Your name: ");
+		JTextField txt = new JTextField(10);
+		panel.add(lbl);
+		panel.add(txt);
+		int selectedOption = JOptionPane.showOptionDialog(null, panel, "The Title", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options , options[0]);
+
+		if(selectedOption == 0)
+		{
+			String name = txt.getText();
+			name = name.replace(" ", "");
+			Ranking newRanking = new Ranking(totalPoints, currentLevel, name);
+			newRanking.addPoint();
+		}
+		
 		timer.cancel();
+
+
 	}
 
 	public void checkCollision() {
