@@ -28,5 +28,6 @@ totev1 10 14031
 LastTest 10 14560
 fgdgdh 10 14951
 Ralica 10 16545
+magi 10 16654
 Proba1 10 18636
 Todor 10 25187
