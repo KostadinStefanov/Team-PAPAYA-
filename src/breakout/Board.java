@@ -5,7 +5,6 @@ import java.awt.Container;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -28,7 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+
 
 public class Board extends JPanel implements Commons {
 
@@ -126,9 +125,7 @@ public class Board extends JPanel implements Commons {
 							bricks[i].getY(), bricks[i].getWidth(),
 							bricks[i].getHeight(), this);
 			}
-		} else {
-		   
-		}
+		} 
 
 		Toolkit.getDefaultToolkit().sync();
 		g.dispose();
@@ -188,7 +185,7 @@ public class Board extends JPanel implements Commons {
 		  String workingDir = System.getProperty("user.dir");  
 		  URI uri;
 			try {
-			    uri = new URI("file:///home/borislav/Dropbox/GitPapaya/Team-PAPAYA-/src/resources/ranking.txt");
+			    uri = new URI("file://" + workingDir + "/src/resources/ranking.txt");
 			    class OpenUrlAction implements ActionListener {
 			      @Override public void actionPerformed(ActionEvent e) {
 			        open(uri);
@@ -213,7 +210,6 @@ public class Board extends JPanel implements Commons {
 			    		+ "<div><p></div></p><div><p>Click the <FONT color=\"#000099\"><U>link</U></FONT>"
 			        + " to go open the whole ranking.</p></div></HTML>");
 			    button.setPreferredSize(new Dimension(250, 250));
-			    //button.setHorizontalAlignment(SwingConstants.LEFT);
 			    button.setBorderPainted(false);
 			    button.setOpaque(false);
 			    button.setBackground(Color.WHITE);

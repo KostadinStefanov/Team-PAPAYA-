@@ -1,13 +1,16 @@
+Borislav 200 71375
 test 180 60645
 BorislavTotev 160 84956
 Stoqn 50 28518
 Totev 50 34189
 Magi 30 18167
+Ivan 30 18386
 Margarita 30 27078
 Hristina 30 31453
 sfg 20 13720
 dfgsdd 20 14733
 Proba 20 16978
+AngelInkov 20 57785
 user1 10 10465
 TREete 10 10584
 used2 10 10614
@@ -17,7 +20,6 @@ testuser1 10 12233
 newUser 10 12485
 newTest1 10 12498
 Benkovski 10 12766
-Borislav 10 12769
 Galka 10 13268
 dfg 10 13400
 lastTest 10 13636
