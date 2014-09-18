@@ -8,5 +8,5 @@
 
 Java Basics September 2014 TEAM "PAPAYA"
 
-Играта, която представяме е "SoftUni-Breaker".
-Целта на играта е вплетените мозъчните клетки(paddle) да изпращат мoзъчен импулс под формата на заряд(ball) и с негoва помощ да преминават нивата в SoftUni като разбиват курсовете.
+The game, which is presenting "SoftUni-Breaker". 
+The aim of the game is woven brain cell (paddle) to send brain momentum in the form of shot (ball) and with his help pass levels in SoftUni when smashing courses.
