@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -185,7 +186,7 @@ public class Board extends JPanel implements Commons {
 		  String workingDir = System.getProperty("user.dir");  
 		  URI uri;
 			try {
-			    uri = new URI("file://" + workingDir + "/src/resources/ranking.txt");
+			    uri = new URI("file://" + workingDir + File.separator + "src" + File.separator + "resources" + File.separator + "ranking.txt");
 			    class OpenUrlAction implements ActionListener {
 			      @Override public void actionPerformed(ActionEvent e) {
 			        open(uri);
